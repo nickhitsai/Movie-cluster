@@ -19,10 +19,17 @@ from model import MyModel
 # predict
 # 
 def predict(title, description):
+    # Load model and weights
     model = MyModel()
     model.load_weights(model_name)
+
+    # Clean the description
     des = clean_data_for_overview(description)
+
+    # Predict
     genre = model.predict(np.array([des]))
+
+    # Prepare the output
     res = r'''{
         "title": "%s",
         "description": "%s",
