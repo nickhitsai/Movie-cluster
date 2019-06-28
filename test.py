@@ -51,14 +51,14 @@ def main():
     parser.add_argument('--description', type=str, help='movie description')
 
     args = parser.parse_args()
-    title = args.title.strip()
-    description = args.description.strip()
+    title = args.title
+    description = args.description
 
-    if input_check(title):
+    if title is None or input_check(title):
         print('Please enter non-empty movie title and try again')
         return
     
-    if input_check(description):
+    if description is None or input_check(description):
         print('Please enter non-empty movie description and try again')
         return
 
