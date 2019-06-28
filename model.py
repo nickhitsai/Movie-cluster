@@ -1,4 +1,4 @@
-import joblib
+import joblib, os
 import numpy as np
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -36,7 +36,7 @@ class MyModel(object):
         sim_scores = list(list(enumerate(x)) for x in consine_similarity)
 
         # Sort the value by score.
-        # Only get the top 1000 similar movies.
+        # Get the top 1000 similar movies.
         sim_scores = [sorted(sim_score, key=lambda x:x[1], reverse=True)[:1000] for sim_score in sim_scores]
 
         # Get the indices from sorted lists
@@ -69,14 +69,18 @@ class MyModel(object):
     def save_weights(self, filepath):
         try:
             joblib.dump((self._model, self._tfidf_matrix, self._y), filepath)
-        except e:
-            print(e)
+        except:
             print('Model does not dump!')
+            exit(0)
 
     def load_weights(self, filepath):
+        if not os.path.isfile(filepath):
+            print('Please generate the model first!')
+            exit(0)
+
         try:
             (self._model, self._tfidf_matrix, self._y) = joblib.load(filepath)
-        except e:
-            print(e)
+        except:
             print('Model does not load!')
+            exit(0)
         

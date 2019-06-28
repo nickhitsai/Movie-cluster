@@ -14,6 +14,14 @@ from model import MyModel
 # }
 
 # 
+# Check the input data
+# Only take the letter into account. 
+# There must be at least one letter in the input.
+def input_check(input_string):
+    tmp = ''.join(in_str for in_str in input_string if in_str.isalpha())
+    return len(tmp) == 0
+
+# 
 # Parse parameter lists
 # load model
 # predict
@@ -43,8 +51,16 @@ def main():
     parser.add_argument('--description', type=str, help='movie description')
 
     args = parser.parse_args()
-    title = args.title
-    description = args.description
+    title = args.title.strip()
+    description = args.description.strip()
+
+    if input_check(title):
+        print('Please enter non-empty movie title and try again')
+        return
+    
+    if input_check(description):
+        print('Please enter non-empty movie description and try again')
+        return
 
     predict(title, description)
 

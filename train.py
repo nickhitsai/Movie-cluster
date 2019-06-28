@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import json, joblib
+import json, joblib, os
 
 from model import MyModel
 from sklearn.model_selection import KFold
@@ -9,10 +9,11 @@ from sklearn.model_selection import KFold
 used_col = ['original_title', 'genres', 'overview']
 # Model path
 model_name = 'mymodel.joblib'
+input_dataset = 'movies_metadata.csv'
 
 # Please tune these parameters based on your computing power
-data_used_for_training = 10000
-data_used_for_testing = 1000
+data_used_for_training = 1000
+data_used_for_testing = 100
 
 # Since the input title would not contain any space, remove it from the dataset.
 # Transform to lower case
@@ -46,7 +47,7 @@ def clean_data_for_overview(x):
 # Keep the input data to the original shape
 # 
 def preprocessing():
-    df = pd.read_csv('movies_metadata.csv', usecols=used_col)
+    df = pd.read_csv(input_dataset, usecols=used_col)
     # Remove duplicate rows
     df = df.drop_duplicates()
 
@@ -151,6 +152,12 @@ def evaluation(ground_truth, prediction):
         
 
 def main():
+    # Check the input dataset exists.
+    if not os.path.isfile(input_dataset):
+        print('Please download the input dataset(movies_metadata.csv) from the following link:')
+        print('https://www.kaggle.com/rounakbanik/the-movies-dataset/version/7#movies_metadata.csv')
+        exit(0)
+
     # 1. preprocess the input data
     # 2. train model
     #   2.1 customize as the same interface as scikit-learn model
