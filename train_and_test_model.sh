@@ -1,0 +1,2 @@
+python train.py
+python test.py --title "Othello" --description "Led by Woody, Andy's toys live happily in his room until Andy's birthday brings Buzz Lightyear onto the scene. Afraid of losing his place in Andy's heart, Woody plots against Buzz. But when circumstan..."
